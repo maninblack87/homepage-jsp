@@ -2,7 +2,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<%@ include file="includes/header.jsp" %>
+<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 
 <main>
 
@@ -57,4 +57,4 @@
 
 </main>
 
-<% include file="includes/footer.jsp" %>
+<jsp:include page="/WEB-INF/views/includes/footer.jsp" />

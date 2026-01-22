@@ -2,7 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -23,7 +22,7 @@
             <c:choose>
 
                 <c:when test="${empty sessionScope.loginUser}">
-                    <div id="access-join-page">
+                    <div id="access-register-page">
                         <a href="${pageContext.request.contextPath}/members/accessRegisterPage">회원가입(</a>
                     </div>
                     <div id="access-login-page">

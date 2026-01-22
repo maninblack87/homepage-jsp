@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.validation.FieldError;
+
+import java.util.Map;
+import java.util.HashMap;
 
 import com.jeon.vo.MemberVO;
 
@@ -37,6 +42,9 @@ public class MemberController {
         @RequestParam("password") String password,
         HttpSession session
     ) {
+        // ★ 이 줄을 추가해서 버튼이 눌리는지 확인!
+        System.out.println("========= 로그인 버튼 클릭됨! ID: " + id + " =========");
+
         // 필터
         Query query = new Query(Criteria.where("id").is(id));
 
@@ -51,6 +59,7 @@ public class MemberController {
             // 로그인 판별 성공시
             // 세션에 해당 회원의 정보를 저장(DB에서 가져온 정보를 저장한다)
             session.setAttribute("loginUser", loginMember);
+            System.out.printf("로그인 성공! %s", loginMember.getId());
             return "redirect:/";
         } else {
             // 로그인 판별 실패시
@@ -68,16 +77,30 @@ public class MemberController {
     // [회원가입 처리]
     @PostMapping("/processRegister")
     public String processRegister(
-        @Valid MemberVO registerMember,   // [검증 스위치] - VO에 정의된 규칙(제약조건 따위) 검사를 수행한다
-        BindingResult result          // [검증 결과 리포트] - 합격/불합격 판정을 기록한다
+        @Valid MemberVO MemberVO,      // [검증 스위치] - VO에 정의된 규칙(제약조건 따위) 검사를 수행한다
+        BindingResult result,          // [검증 결과 리포트] - 합격/불합격 판정을 기록한다
+        Model model
     ) {
         if (result.hasErrors()){
-            return "members/join";
+
+            // errors 생성(에러들을 담을 Map)
+            Map<String, String> errors = new HashMap<>();
+
+            // result(결과 리포트)에 적힌 에러들을 모두 errors에 담기
+            for (FieldError error : result.getFieldErrors()){
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+
+            // JSP로(register.jsp) 전달
+            model.addAttribute("errors", errors);
+
+            // 회원가입 페이지로 이동
+            return "members/register";
         }
 
         try{
             // 데이터베이스(몽고DB)에 저장한다
-            mongoTemplate.insert(registerMember, "members");
+            mongoTemplate.insert(MemberVO, "members");
         } catch (Exception e) {
             return "redirect:/members/accessRegisterPage?dbError=true";
         }

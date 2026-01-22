@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<html lang="en" style="font-size:20px;">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,8 +22,8 @@
             <c:choose>
 
                 <c:when test="${empty sessionScope.loginUser}">
-                    <div id="access-join-page">
-                        <a href="${pageContext.request.contextPath}/members/accessJoinPage">회원가입</a>
+                    <div id="access-register-page">
+                        <a href="${pageContext.request.contextPath}/members/accessRegisterPage">회원가입(</a>
                     </div>
                     <div id="access-login-page">
                         <a href="${pageContext.request.contextPath}/members/accessLoginPage">로그인</a>

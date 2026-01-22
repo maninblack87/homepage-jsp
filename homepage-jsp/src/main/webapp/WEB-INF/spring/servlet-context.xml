@@ -3,9 +3,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:beans="http://www.springframework.org/schema/beans"
     xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo" 
     xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/data/mongo https://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
     <!--어노테이션 기반 설정 활성화-->
     <annotation-driven />
@@ -23,5 +25,16 @@
 
     <!-- 클래스 자동 검색 -->
     <context:component-scan base-package="com.jeon" />
+
+    <!-- 몽고DB 클라이언트 : mongoTemplate 사용을 위한 -->
+    <beans:bean id="mongoClient" class="org.springframework.data.mongodb.core.MongoClientFactoryBean">
+        <beans:property name="connectionString" value="mongodb+srv://maninblack87:quantum87@cluster0.sho0t.mongodb.net/homepage-jsp?retryWrites=true&amp;w=majority" />
+    </beans:bean>
+
+    <mongo:db-factory id="mongoDbFactory" mongo-client-ref="mongoClient" dbname="homepage-jsp" />
+
+    <beans:bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <beans:constructor-arg ref="mongoDbFactory" />
+    </beans:bean>
 
 </beans:beans>

@@ -2,7 +2,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<% include file="includes/header.jsp" %>
+<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 
 <main>
 
@@ -13,12 +13,12 @@
             <form action="${pageContext.request.contextPath}/members/processLogin" method="post">
                 <!-- 아이디 입력 부분 -->
                 <div id="input-id-area">
-                    <label for="id">아이디</label>
+                    <label for="id">아이디</label><br>
                     <input type="text" id="input-id" name="id" required />
                 </div>
                 <!-- 비밀번호 입력 부분 -->
                 <div id="input-password-area">
-                    <label for="password">비밀번호</label>
+                    <label for="password">비밀번호</label><br>
                     <input type="password" id="input-password" name="password" required />
                 </div>
                 <!-- 버튼 : 로그인 -->
@@ -34,4 +34,4 @@
 
 </main>
 
-<% include file="includes/footer.jsp" %>
+<jsp:include page="/WEB-INF/views/includes/footer.jsp" />
