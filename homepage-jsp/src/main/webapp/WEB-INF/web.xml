@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> <!-- 필터라는 검문소에서 실제로 일할 '담당자' -->
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>                         <!-- 모든 요청이 이 필터를 거쳐야 한다 -->
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>appServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  <!-- 서블릿 매니저 -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>                  <!-- 업무 메뉴얼 -->
+            <param-value>/WEB-INF/spring/servlet-context.xml</param-value>  <!-- 상세 지시서 위치 -->
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>appServlet</servlet-name>   <!-- 누구에게 맡길 것인가 -->
+        <url-pattern>/</url-pattern>              <!-- 어디까지가 담당 구역인가 : 모든 주소 요청을 가리킴 -->
+    </servlet-mapping>
+
+</web-app>
